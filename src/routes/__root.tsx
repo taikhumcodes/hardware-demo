@@ -85,10 +85,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Premium demo of a hardware shop management platform: inventory, billing, GST invoicing, suppliers and analytics — by Evolix." },
       { name: "author", content: "Evolix" },
       { property: "og:title", content: "Evolix Hardware — Shop Management System" },
-      { property: "og:description", content: "Modern hardware shop management: inventory, billing, GST invoicing, suppliers and analytics." },
+      { property: "og:description", content: "Premium demo of a hardware shop management platform: inventory, billing, GST invoicing, suppliers and analytics — by Evolix." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Evolix" },
+      { name: "twitter:title", content: "Evolix Hardware — Shop Management System" },
+      { name: "twitter:description", content: "Premium demo of a hardware shop management platform: inventory, billing, GST invoicing, suppliers and analytics — by Evolix." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4e80cde1-8ec2-4048-9473-8458945471d5" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4e80cde1-8ec2-4048-9473-8458945471d5" },
     ],
     links: [
       {
