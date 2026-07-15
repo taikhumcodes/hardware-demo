@@ -114,7 +114,7 @@ export function PremiumLock({ title, description, children }: { title: string; d
           </p>
         </motion.div>
       </div>
-      <UpgradeDialog open={open} onOpenChange={setOpen} title-placeholder="" module={title} />
+      <UpgradeDialog open={open} onOpenChange={setOpen} module={title} />
     </div>
   );
 }
