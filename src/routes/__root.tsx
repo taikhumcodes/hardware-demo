@@ -11,10 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
-import { TopNav } from "@/components/top-nav";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/hooks/use-auth";
 
 function NotFoundComponent() {
   return (
@@ -127,16 +125,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset className="bg-[color:var(--secondary)]/40">
-          <TopNav />
-          <main className="flex-1 p-6 lg:p-8">
-            <Outlet />
-          </main>
-        </SidebarInset>
+      <AuthProvider>
+        <Outlet />
         <Toaster position="top-right" />
-      </SidebarProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
