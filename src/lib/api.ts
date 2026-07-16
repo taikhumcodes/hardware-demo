@@ -273,13 +273,14 @@ export const useCreateSale = () => {
       items: { product_id: string; product_name: string; quantity: number; unit_price: number; gst_rate: number }[];
     }) => {
       const invoice_number = `INV-${Date.now()}`;
+      const method = input.payment_method as "cash" | "upi" | "card" | "bank_transfer" | "cheque" | "credit";
       const { data: sale, error: e1 } = await supabase
         .from("sales")
         .insert({
           invoice_number,
           customer_id: input.customer_id,
           customer_name: input.customer_name,
-          payment_method: input.payment_method,
+          payment_method: method,
           paid: input.paid,
           discount: input.discount,
           status: "completed",
@@ -393,7 +394,7 @@ export const useStockMovements = () =>
 export const useAddStockMovement = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (m: { product_id: string; product_name: string; movement_type: string; quantity: number; notes?: string }) => {
+    mutationFn: async (m: { product_id: string; product_name: string; movement_type: "inward" | "outward" | "adjustment" | "transfer"; quantity: number; notes?: string }) => {
       const reference = `SM-${Date.now().toString().slice(-6)}`;
       const { error } = await supabase.from("stock_movements").insert({ reference, ...m });
       if (error) throw error;
@@ -429,7 +430,7 @@ export const useSaveQuotation = () => {
       const payload = {
         quote_number, party_name: q.party_name, scope: q.scope ?? null,
         valid_until: q.valid_until ?? null, total: q.total ?? 0,
-        status: q.status ?? "draft",
+        status: (q.status ?? "draft") as "draft" | "sent" | "won" | "lost" | "expired",
       };
       const { error } = q.id
         ? await supabase.from("quotations").update(payload).eq("id", q.id)
@@ -524,7 +525,7 @@ export const useSettings = () =>
 export const useSaveSettings = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (s: { id: string; [k: string]: unknown }) => {
+    mutationFn: async (s: { id: string; shop_name?: string; gstin?: string; address?: string; phone?: string; email?: string; invoice_prefix?: string; po_prefix?: string; quote_prefix?: string }) => {
       const { id, ...rest } = s;
       const { error } = await supabase.from("settings").update(rest).eq("id", id);
       if (error) throw error;
