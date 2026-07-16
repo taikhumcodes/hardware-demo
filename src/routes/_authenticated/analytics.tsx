@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/pages/analytics";
 import { PremiumLock } from "@/components/premium-lock";
-export const Route = createFileRoute("/analytics")({
+export const Route = createFileRoute("/_authenticated/analytics")({
   component: () => (
     <PremiumLock
       title="Advanced Analytics"

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/pages/payments";
 import { PremiumLock } from "@/components/premium-lock";
-export const Route = createFileRoute("/payments")({
+export const Route = createFileRoute("/_authenticated/payments")({
   component: () => (
     <PremiumLock
       title="Payments Module"

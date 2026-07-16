@@ -9,190 +9,190 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UsersRouteImport } from './routes/users'
-import { Route as TendersRouteImport } from './routes/tenders'
-import { Route as SuppliersRouteImport } from './routes/suppliers'
-import { Route as StockRouteImport } from './routes/stock'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as SalesRouteImport } from './routes/sales'
-import { Route as ReportsRouteImport } from './routes/reports'
-import { Route as PurchaseOrdersRouteImport } from './routes/purchase-orders'
-import { Route as ProductsRouteImport } from './routes/products'
-import { Route as PaymentsRouteImport } from './routes/payments'
-import { Route as InvoicesRouteImport } from './routes/invoices'
-import { Route as InventoryRouteImport } from './routes/inventory'
-import { Route as CustomersRouteImport } from './routes/customers'
-import { Route as CreditRouteImport } from './routes/credit'
-import { Route as CategoriesRouteImport } from './routes/categories'
-import { Route as BrandsRouteImport } from './routes/brands'
-import { Route as BarcodeRouteImport } from './routes/barcode'
-import { Route as AnalyticsRouteImport } from './routes/analytics'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
+import { Route as AuthenticatedTendersRouteImport } from './routes/_authenticated/tenders'
+import { Route as AuthenticatedSuppliersRouteImport } from './routes/_authenticated/suppliers'
+import { Route as AuthenticatedStockRouteImport } from './routes/_authenticated/stock'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedSalesRouteImport } from './routes/_authenticated/sales'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedPurchaseOrdersRouteImport } from './routes/_authenticated/purchase-orders'
+import { Route as AuthenticatedProductsRouteImport } from './routes/_authenticated/products'
+import { Route as AuthenticatedPaymentsRouteImport } from './routes/_authenticated/payments'
+import { Route as AuthenticatedInvoicesRouteImport } from './routes/_authenticated/invoices'
+import { Route as AuthenticatedInventoryRouteImport } from './routes/_authenticated/inventory'
+import { Route as AuthenticatedCustomersRouteImport } from './routes/_authenticated/customers'
+import { Route as AuthenticatedCreditRouteImport } from './routes/_authenticated/credit'
+import { Route as AuthenticatedCategoriesRouteImport } from './routes/_authenticated/categories'
+import { Route as AuthenticatedBrandsRouteImport } from './routes/_authenticated/brands'
+import { Route as AuthenticatedBarcodeRouteImport } from './routes/_authenticated/barcode'
+import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
 
-const UsersRoute = UsersRouteImport.update({
-  id: '/users',
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/_authenticated/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
+  id: '/_authenticated/users',
   path: '/users',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TendersRoute = TendersRouteImport.update({
-  id: '/tenders',
+const AuthenticatedTendersRoute = AuthenticatedTendersRouteImport.update({
+  id: '/_authenticated/tenders',
   path: '/tenders',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SuppliersRoute = SuppliersRouteImport.update({
-  id: '/suppliers',
+const AuthenticatedSuppliersRoute = AuthenticatedSuppliersRouteImport.update({
+  id: '/_authenticated/suppliers',
   path: '/suppliers',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StockRoute = StockRouteImport.update({
-  id: '/stock',
+const AuthenticatedStockRoute = AuthenticatedStockRouteImport.update({
+  id: '/_authenticated/stock',
   path: '/stock',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/_authenticated/settings',
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SalesRoute = SalesRouteImport.update({
-  id: '/sales',
+const AuthenticatedSalesRoute = AuthenticatedSalesRouteImport.update({
+  id: '/_authenticated/sales',
   path: '/sales',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReportsRoute = ReportsRouteImport.update({
-  id: '/reports',
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/_authenticated/reports',
   path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PurchaseOrdersRoute = PurchaseOrdersRouteImport.update({
-  id: '/purchase-orders',
-  path: '/purchase-orders',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsRoute = ProductsRouteImport.update({
-  id: '/products',
+const AuthenticatedPurchaseOrdersRoute =
+  AuthenticatedPurchaseOrdersRouteImport.update({
+    id: '/_authenticated/purchase-orders',
+    path: '/purchase-orders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticatedProductsRoute = AuthenticatedProductsRouteImport.update({
+  id: '/_authenticated/products',
   path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PaymentsRoute = PaymentsRouteImport.update({
-  id: '/payments',
+const AuthenticatedPaymentsRoute = AuthenticatedPaymentsRouteImport.update({
+  id: '/_authenticated/payments',
   path: '/payments',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InvoicesRoute = InvoicesRouteImport.update({
-  id: '/invoices',
+const AuthenticatedInvoicesRoute = AuthenticatedInvoicesRouteImport.update({
+  id: '/_authenticated/invoices',
   path: '/invoices',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InventoryRoute = InventoryRouteImport.update({
-  id: '/inventory',
+const AuthenticatedInventoryRoute = AuthenticatedInventoryRouteImport.update({
+  id: '/_authenticated/inventory',
   path: '/inventory',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CustomersRoute = CustomersRouteImport.update({
-  id: '/customers',
+const AuthenticatedCustomersRoute = AuthenticatedCustomersRouteImport.update({
+  id: '/_authenticated/customers',
   path: '/customers',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CreditRoute = CreditRouteImport.update({
-  id: '/credit',
+const AuthenticatedCreditRoute = AuthenticatedCreditRouteImport.update({
+  id: '/_authenticated/credit',
   path: '/credit',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CategoriesRoute = CategoriesRouteImport.update({
-  id: '/categories',
+const AuthenticatedCategoriesRoute = AuthenticatedCategoriesRouteImport.update({
+  id: '/_authenticated/categories',
   path: '/categories',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BrandsRoute = BrandsRouteImport.update({
-  id: '/brands',
+const AuthenticatedBrandsRoute = AuthenticatedBrandsRouteImport.update({
+  id: '/_authenticated/brands',
   path: '/brands',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BarcodeRoute = BarcodeRouteImport.update({
-  id: '/barcode',
+const AuthenticatedBarcodeRoute = AuthenticatedBarcodeRouteImport.update({
+  id: '/_authenticated/barcode',
   path: '/barcode',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AnalyticsRoute = AnalyticsRouteImport.update({
-  id: '/analytics',
+const AuthenticatedAnalyticsRoute = AuthenticatedAnalyticsRouteImport.update({
+  id: '/_authenticated/analytics',
   path: '/analytics',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/analytics': typeof AnalyticsRoute
-  '/barcode': typeof BarcodeRoute
-  '/brands': typeof BrandsRoute
-  '/categories': typeof CategoriesRoute
-  '/credit': typeof CreditRoute
-  '/customers': typeof CustomersRoute
-  '/inventory': typeof InventoryRoute
-  '/invoices': typeof InvoicesRoute
-  '/payments': typeof PaymentsRoute
-  '/products': typeof ProductsRoute
-  '/purchase-orders': typeof PurchaseOrdersRoute
-  '/reports': typeof ReportsRoute
-  '/sales': typeof SalesRoute
-  '/settings': typeof SettingsRoute
-  '/stock': typeof StockRoute
-  '/suppliers': typeof SuppliersRoute
-  '/tenders': typeof TendersRoute
-  '/users': typeof UsersRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/barcode': typeof AuthenticatedBarcodeRoute
+  '/brands': typeof AuthenticatedBrandsRoute
+  '/categories': typeof AuthenticatedCategoriesRoute
+  '/credit': typeof AuthenticatedCreditRoute
+  '/customers': typeof AuthenticatedCustomersRoute
+  '/inventory': typeof AuthenticatedInventoryRoute
+  '/invoices': typeof AuthenticatedInvoicesRoute
+  '/payments': typeof AuthenticatedPaymentsRoute
+  '/products': typeof AuthenticatedProductsRoute
+  '/purchase-orders': typeof AuthenticatedPurchaseOrdersRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/sales': typeof AuthenticatedSalesRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/stock': typeof AuthenticatedStockRoute
+  '/suppliers': typeof AuthenticatedSuppliersRoute
+  '/tenders': typeof AuthenticatedTendersRoute
+  '/users': typeof AuthenticatedUsersRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/analytics': typeof AnalyticsRoute
-  '/barcode': typeof BarcodeRoute
-  '/brands': typeof BrandsRoute
-  '/categories': typeof CategoriesRoute
-  '/credit': typeof CreditRoute
-  '/customers': typeof CustomersRoute
-  '/inventory': typeof InventoryRoute
-  '/invoices': typeof InvoicesRoute
-  '/payments': typeof PaymentsRoute
-  '/products': typeof ProductsRoute
-  '/purchase-orders': typeof PurchaseOrdersRoute
-  '/reports': typeof ReportsRoute
-  '/sales': typeof SalesRoute
-  '/settings': typeof SettingsRoute
-  '/stock': typeof StockRoute
-  '/suppliers': typeof SuppliersRoute
-  '/tenders': typeof TendersRoute
-  '/users': typeof UsersRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/barcode': typeof AuthenticatedBarcodeRoute
+  '/brands': typeof AuthenticatedBrandsRoute
+  '/categories': typeof AuthenticatedCategoriesRoute
+  '/credit': typeof AuthenticatedCreditRoute
+  '/customers': typeof AuthenticatedCustomersRoute
+  '/inventory': typeof AuthenticatedInventoryRoute
+  '/invoices': typeof AuthenticatedInvoicesRoute
+  '/payments': typeof AuthenticatedPaymentsRoute
+  '/products': typeof AuthenticatedProductsRoute
+  '/purchase-orders': typeof AuthenticatedPurchaseOrdersRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/sales': typeof AuthenticatedSalesRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/stock': typeof AuthenticatedStockRoute
+  '/suppliers': typeof AuthenticatedSuppliersRoute
+  '/tenders': typeof AuthenticatedTendersRoute
+  '/users': typeof AuthenticatedUsersRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/analytics': typeof AnalyticsRoute
-  '/barcode': typeof BarcodeRoute
-  '/brands': typeof BrandsRoute
-  '/categories': typeof CategoriesRoute
-  '/credit': typeof CreditRoute
-  '/customers': typeof CustomersRoute
-  '/inventory': typeof InventoryRoute
-  '/invoices': typeof InvoicesRoute
-  '/payments': typeof PaymentsRoute
-  '/products': typeof ProductsRoute
-  '/purchase-orders': typeof PurchaseOrdersRoute
-  '/reports': typeof ReportsRoute
-  '/sales': typeof SalesRoute
-  '/settings': typeof SettingsRoute
-  '/stock': typeof StockRoute
-  '/suppliers': typeof SuppliersRoute
-  '/tenders': typeof TendersRoute
-  '/users': typeof UsersRoute
+  '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
+  '/_authenticated/barcode': typeof AuthenticatedBarcodeRoute
+  '/_authenticated/brands': typeof AuthenticatedBrandsRoute
+  '/_authenticated/categories': typeof AuthenticatedCategoriesRoute
+  '/_authenticated/credit': typeof AuthenticatedCreditRoute
+  '/_authenticated/customers': typeof AuthenticatedCustomersRoute
+  '/_authenticated/inventory': typeof AuthenticatedInventoryRoute
+  '/_authenticated/invoices': typeof AuthenticatedInvoicesRoute
+  '/_authenticated/payments': typeof AuthenticatedPaymentsRoute
+  '/_authenticated/products': typeof AuthenticatedProductsRoute
+  '/_authenticated/purchase-orders': typeof AuthenticatedPurchaseOrdersRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_authenticated/sales': typeof AuthenticatedSalesRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/stock': typeof AuthenticatedStockRoute
+  '/_authenticated/suppliers': typeof AuthenticatedSuppliersRoute
+  '/_authenticated/tenders': typeof AuthenticatedTendersRoute
+  '/_authenticated/users': typeof AuthenticatedUsersRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/analytics'
     | '/barcode'
     | '/brands'
@@ -211,9 +211,9 @@ export interface FileRouteTypes {
     | '/suppliers'
     | '/tenders'
     | '/users'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/analytics'
     | '/barcode'
     | '/brands'
@@ -232,209 +232,210 @@ export interface FileRouteTypes {
     | '/suppliers'
     | '/tenders'
     | '/users'
+    | '/'
   id:
     | '__root__'
-    | '/'
-    | '/analytics'
-    | '/barcode'
-    | '/brands'
-    | '/categories'
-    | '/credit'
-    | '/customers'
-    | '/inventory'
-    | '/invoices'
-    | '/payments'
-    | '/products'
-    | '/purchase-orders'
-    | '/reports'
-    | '/sales'
-    | '/settings'
-    | '/stock'
-    | '/suppliers'
-    | '/tenders'
-    | '/users'
+    | '/_authenticated/analytics'
+    | '/_authenticated/barcode'
+    | '/_authenticated/brands'
+    | '/_authenticated/categories'
+    | '/_authenticated/credit'
+    | '/_authenticated/customers'
+    | '/_authenticated/inventory'
+    | '/_authenticated/invoices'
+    | '/_authenticated/payments'
+    | '/_authenticated/products'
+    | '/_authenticated/purchase-orders'
+    | '/_authenticated/reports'
+    | '/_authenticated/sales'
+    | '/_authenticated/settings'
+    | '/_authenticated/stock'
+    | '/_authenticated/suppliers'
+    | '/_authenticated/tenders'
+    | '/_authenticated/users'
+    | '/_authenticated/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AnalyticsRoute: typeof AnalyticsRoute
-  BarcodeRoute: typeof BarcodeRoute
-  BrandsRoute: typeof BrandsRoute
-  CategoriesRoute: typeof CategoriesRoute
-  CreditRoute: typeof CreditRoute
-  CustomersRoute: typeof CustomersRoute
-  InventoryRoute: typeof InventoryRoute
-  InvoicesRoute: typeof InvoicesRoute
-  PaymentsRoute: typeof PaymentsRoute
-  ProductsRoute: typeof ProductsRoute
-  PurchaseOrdersRoute: typeof PurchaseOrdersRoute
-  ReportsRoute: typeof ReportsRoute
-  SalesRoute: typeof SalesRoute
-  SettingsRoute: typeof SettingsRoute
-  StockRoute: typeof StockRoute
-  SuppliersRoute: typeof SuppliersRoute
-  TendersRoute: typeof TendersRoute
-  UsersRoute: typeof UsersRoute
+  AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
+  AuthenticatedBarcodeRoute: typeof AuthenticatedBarcodeRoute
+  AuthenticatedBrandsRoute: typeof AuthenticatedBrandsRoute
+  AuthenticatedCategoriesRoute: typeof AuthenticatedCategoriesRoute
+  AuthenticatedCreditRoute: typeof AuthenticatedCreditRoute
+  AuthenticatedCustomersRoute: typeof AuthenticatedCustomersRoute
+  AuthenticatedInventoryRoute: typeof AuthenticatedInventoryRoute
+  AuthenticatedInvoicesRoute: typeof AuthenticatedInvoicesRoute
+  AuthenticatedPaymentsRoute: typeof AuthenticatedPaymentsRoute
+  AuthenticatedProductsRoute: typeof AuthenticatedProductsRoute
+  AuthenticatedPurchaseOrdersRoute: typeof AuthenticatedPurchaseOrdersRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
+  AuthenticatedSalesRoute: typeof AuthenticatedSalesRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedStockRoute: typeof AuthenticatedStockRoute
+  AuthenticatedSuppliersRoute: typeof AuthenticatedSuppliersRoute
+  AuthenticatedTendersRoute: typeof AuthenticatedTendersRoute
+  AuthenticatedUsersRoute: typeof AuthenticatedUsersRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/users': {
-      id: '/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tenders': {
-      id: '/tenders'
-      path: '/tenders'
-      fullPath: '/tenders'
-      preLoaderRoute: typeof TendersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/suppliers': {
-      id: '/suppliers'
-      path: '/suppliers'
-      fullPath: '/suppliers'
-      preLoaderRoute: typeof SuppliersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/stock': {
-      id: '/stock'
-      path: '/stock'
-      fullPath: '/stock'
-      preLoaderRoute: typeof StockRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sales': {
-      id: '/sales'
-      path: '/sales'
-      fullPath: '/sales'
-      preLoaderRoute: typeof SalesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports': {
-      id: '/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/purchase-orders': {
-      id: '/purchase-orders'
-      path: '/purchase-orders'
-      fullPath: '/purchase-orders'
-      preLoaderRoute: typeof PurchaseOrdersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products': {
-      id: '/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof ProductsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/payments': {
-      id: '/payments'
-      path: '/payments'
-      fullPath: '/payments'
-      preLoaderRoute: typeof PaymentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/invoices': {
-      id: '/invoices'
-      path: '/invoices'
-      fullPath: '/invoices'
-      preLoaderRoute: typeof InvoicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/inventory': {
-      id: '/inventory'
-      path: '/inventory'
-      fullPath: '/inventory'
-      preLoaderRoute: typeof InventoryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/customers': {
-      id: '/customers'
-      path: '/customers'
-      fullPath: '/customers'
-      preLoaderRoute: typeof CustomersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/credit': {
-      id: '/credit'
-      path: '/credit'
-      fullPath: '/credit'
-      preLoaderRoute: typeof CreditRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/categories': {
-      id: '/categories'
-      path: '/categories'
-      fullPath: '/categories'
-      preLoaderRoute: typeof CategoriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/brands': {
-      id: '/brands'
-      path: '/brands'
-      fullPath: '/brands'
-      preLoaderRoute: typeof BrandsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/barcode': {
-      id: '/barcode'
-      path: '/barcode'
-      fullPath: '/barcode'
-      preLoaderRoute: typeof BarcodeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/analytics': {
-      id: '/analytics'
-      path: '/analytics'
-      fullPath: '/analytics'
-      preLoaderRoute: typeof AnalyticsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/users': {
+      id: '/_authenticated/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof AuthenticatedUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/tenders': {
+      id: '/_authenticated/tenders'
+      path: '/tenders'
+      fullPath: '/tenders'
+      preLoaderRoute: typeof AuthenticatedTendersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/suppliers': {
+      id: '/_authenticated/suppliers'
+      path: '/suppliers'
+      fullPath: '/suppliers'
+      preLoaderRoute: typeof AuthenticatedSuppliersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/stock': {
+      id: '/_authenticated/stock'
+      path: '/stock'
+      fullPath: '/stock'
+      preLoaderRoute: typeof AuthenticatedStockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/sales': {
+      id: '/_authenticated/sales'
+      path: '/sales'
+      fullPath: '/sales'
+      preLoaderRoute: typeof AuthenticatedSalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/purchase-orders': {
+      id: '/_authenticated/purchase-orders'
+      path: '/purchase-orders'
+      fullPath: '/purchase-orders'
+      preLoaderRoute: typeof AuthenticatedPurchaseOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/products': {
+      id: '/_authenticated/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof AuthenticatedProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/payments': {
+      id: '/_authenticated/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof AuthenticatedPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/invoices': {
+      id: '/_authenticated/invoices'
+      path: '/invoices'
+      fullPath: '/invoices'
+      preLoaderRoute: typeof AuthenticatedInvoicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/inventory': {
+      id: '/_authenticated/inventory'
+      path: '/inventory'
+      fullPath: '/inventory'
+      preLoaderRoute: typeof AuthenticatedInventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/customers': {
+      id: '/_authenticated/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof AuthenticatedCustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/credit': {
+      id: '/_authenticated/credit'
+      path: '/credit'
+      fullPath: '/credit'
+      preLoaderRoute: typeof AuthenticatedCreditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/categories': {
+      id: '/_authenticated/categories'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof AuthenticatedCategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/brands': {
+      id: '/_authenticated/brands'
+      path: '/brands'
+      fullPath: '/brands'
+      preLoaderRoute: typeof AuthenticatedBrandsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/barcode': {
+      id: '/_authenticated/barcode'
+      path: '/barcode'
+      fullPath: '/barcode'
+      preLoaderRoute: typeof AuthenticatedBarcodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/analytics': {
+      id: '/_authenticated/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AuthenticatedAnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AnalyticsRoute: AnalyticsRoute,
-  BarcodeRoute: BarcodeRoute,
-  BrandsRoute: BrandsRoute,
-  CategoriesRoute: CategoriesRoute,
-  CreditRoute: CreditRoute,
-  CustomersRoute: CustomersRoute,
-  InventoryRoute: InventoryRoute,
-  InvoicesRoute: InvoicesRoute,
-  PaymentsRoute: PaymentsRoute,
-  ProductsRoute: ProductsRoute,
-  PurchaseOrdersRoute: PurchaseOrdersRoute,
-  ReportsRoute: ReportsRoute,
-  SalesRoute: SalesRoute,
-  SettingsRoute: SettingsRoute,
-  StockRoute: StockRoute,
-  SuppliersRoute: SuppliersRoute,
-  TendersRoute: TendersRoute,
-  UsersRoute: UsersRoute,
+  AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
+  AuthenticatedBarcodeRoute: AuthenticatedBarcodeRoute,
+  AuthenticatedBrandsRoute: AuthenticatedBrandsRoute,
+  AuthenticatedCategoriesRoute: AuthenticatedCategoriesRoute,
+  AuthenticatedCreditRoute: AuthenticatedCreditRoute,
+  AuthenticatedCustomersRoute: AuthenticatedCustomersRoute,
+  AuthenticatedInventoryRoute: AuthenticatedInventoryRoute,
+  AuthenticatedInvoicesRoute: AuthenticatedInvoicesRoute,
+  AuthenticatedPaymentsRoute: AuthenticatedPaymentsRoute,
+  AuthenticatedProductsRoute: AuthenticatedProductsRoute,
+  AuthenticatedPurchaseOrdersRoute: AuthenticatedPurchaseOrdersRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
+  AuthenticatedSalesRoute: AuthenticatedSalesRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedStockRoute: AuthenticatedStockRoute,
+  AuthenticatedSuppliersRoute: AuthenticatedSuppliersRoute,
+  AuthenticatedTendersRoute: AuthenticatedTendersRoute,
+  AuthenticatedUsersRoute: AuthenticatedUsersRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
