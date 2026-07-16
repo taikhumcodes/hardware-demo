@@ -1,4 +1,4 @@
-import { Bell, Search, Command as CmdIcon } from "lucide-react";
+import { Bell, Search, Command as CmdIcon, LogOut, User as UserIcon } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,8 +7,15 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
   DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/hooks/use-auth";
+import { useNavigate, Link } from "@tanstack/react-router";
 
 export function TopNav() {
+  const { profile, user, roles, signOut } = useAuth();
+  const nav = useNavigate();
+  const name = profile?.full_name || user?.email?.split("@")[0] || "User";
+  const role = roles[0] ? roles[0][0].toUpperCase() + roles[0].slice(1) : "Staff";
+  const initials = name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase();
   return (
     <header className="sticky top-0 z-30 flex h-14 w-full items-center gap-3 border-b bg-background/80 px-4 backdrop-blur">
       <SidebarTrigger className="-ml-1" />
@@ -28,22 +35,27 @@ export function TopNav() {
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 rounded-lg p-1 pr-2 hover:bg-secondary transition">
               <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">EV</AvatarFallback>
+                <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">{initials}</AvatarFallback>
               </Avatar>
               <div className="hidden text-left leading-tight md:block">
-                <div className="text-[13px] font-medium">Evolix Admin</div>
-                <div className="text-[11px] text-muted-foreground">Owner</div>
+                <div className="text-[13px] font-medium">{name}</div>
+                <div className="text-[11px] text-muted-foreground">{role}</div>
               </div>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
-            <DropdownMenuLabel>My account</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              <div className="flex flex-col">
+                <span className="text-[13px]">{name}</span>
+                <span className="text-[11px] font-normal text-muted-foreground truncate">{user?.email}</span>
+              </div>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem asChild><Link to="/settings"><UserIcon className="mr-2 h-4 w-4" />Settings</Link></DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Sign out</DropdownMenuItem>
+            <DropdownMenuItem onClick={async () => { await signOut(); nav({ to: "/auth" }); }}>
+              <LogOut className="mr-2 h-4 w-4" /> Sign out
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
