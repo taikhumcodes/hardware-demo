@@ -4,21 +4,17 @@ import { StatusBadge } from "@/components/status-badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Boxes, ArrowDownToLine, ArrowUpFromLine, AlertTriangle, PackagePlus, PackageMinus, RefreshCw } from "lucide-react";
-import { products, inr } from "@/lib/data";
-
-const movements = [
-  { id: "MV-4021", type: "Inward", product: "Asian Paints Apcolite 20L", qty: 24, ref: "PO-2412", date: "2026-07-14", by: "Ramesh" },
-  { id: "MV-4020", type: "Outward", product: "Astral CPVC 1 inch", qty: 60, ref: "INV-8821", date: "2026-07-14", by: "Suresh" },
-  { id: "MV-4019", type: "Adjustment", product: "JSW TMT 12mm", qty: -4, ref: "ADJ-118", date: "2026-07-13", by: "Anil" },
-  { id: "MV-4018", type: "Inward", product: "UltraTech PPC 50kg", qty: 200, ref: "PO-2409", date: "2026-07-13", by: "Ramesh" },
-  { id: "MV-4017", type: "Outward", product: "Havells Modular Switch", qty: 48, ref: "INV-8818", date: "2026-07-12", by: "Priya" },
-  { id: "MV-4016", type: "Transfer", product: "Supreme PVC 4 inch", qty: 30, ref: "TR-091", date: "2026-07-12", by: "Anil" },
-];
+import { useProducts, useStockMovements } from "@/lib/api";
+import { inr, fmtDate } from "@/lib/format";
 
 export default function Stock() {
-  const total = products.reduce((s, p) => s + p.stock * p.purchasePrice, 0);
-  const low = products.filter((p) => p.stock <= p.minStock && p.stock > 0).length;
-  const out = products.filter((p) => p.stock === 0).length;
+  const { data: products = [] } = useProducts();
+  const { data: movements = [] } = useStockMovements();
+  const total = products.reduce((s, p) => s + Number(p.stock) * Number(p.purchase_price), 0);
+  const low = products.filter((p) => Number(p.stock) <= Number(p.min_stock) && Number(p.stock) > 0).length;
+  const out = products.filter((p) => Number(p.stock) === 0).length;
+  const inward = movements.filter((m) => m.movement_type === "inward").reduce((s, m) => s + Number(m.quantity), 0);
+  const outward = movements.filter((m) => m.movement_type === "outward").reduce((s, m) => s + Number(m.quantity), 0);
   return (
     <div className="space-y-6">
       <PageHeader
@@ -34,8 +30,8 @@ export default function Stock() {
       />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Stock value" value={inr(total)} icon={Boxes} tone="primary" />
-        <StatCard label="Inward (7d)" value="₹6.82 L" icon={ArrowDownToLine} tone="success" />
-        <StatCard label="Outward (7d)" value="₹5.14 L" icon={ArrowUpFromLine} tone="warning" />
+        <StatCard label="Inward units" value={inward.toLocaleString("en-IN")} icon={ArrowDownToLine} tone="success" />
+        <StatCard label="Outward units" value={outward.toLocaleString("en-IN")} icon={ArrowUpFromLine} tone="warning" />
         <StatCard label="Low / Out" value={`${low} / ${out}`} icon={AlertTriangle} tone="danger" />
       </div>
       <Card className="rounded-2xl border p-0 shadow-none overflow-hidden">
@@ -49,14 +45,15 @@ export default function Stock() {
         </div>
         {movements.map((m) => (
           <div key={m.id} className="grid grid-cols-12 gap-3 border-t px-5 py-3 text-[13px] items-center hover:bg-secondary/20">
-            <span className="col-span-2 font-mono text-[12px] text-muted-foreground">{m.id}</span>
-            <span className="col-span-4 font-medium truncate">{m.product}</span>
-            <span className="col-span-2"><StatusBadge status={m.type} /></span>
-            <span className={`col-span-1 text-right tabular-nums font-semibold ${m.qty < 0 ? "text-destructive" : "text-success"}`}>{m.qty > 0 ? `+${m.qty}` : m.qty}</span>
-            <span className="col-span-2 font-mono text-[12px] text-muted-foreground">{m.ref}</span>
-            <span className="col-span-1 text-right text-[12px] text-muted-foreground">{m.date}</span>
+            <span className="col-span-2 font-mono text-[12px] text-muted-foreground">{m.reference}</span>
+            <span className="col-span-4 font-medium truncate">{m.product_name}</span>
+            <span className="col-span-2"><StatusBadge status={m.movement_type} /></span>
+            <span className={`col-span-1 text-right tabular-nums font-semibold ${m.movement_type === "outward" ? "text-destructive" : "text-success"}`}>{m.movement_type === "outward" ? "-" : "+"}{m.quantity}</span>
+            <span className="col-span-2 font-mono text-[12px] text-muted-foreground">{m.doc_ref ?? "—"}</span>
+            <span className="col-span-1 text-right text-[12px] text-muted-foreground">{fmtDate(m.created_at)}</span>
           </div>
         ))}
+        {movements.length === 0 && <div className="border-t p-8 text-center text-[13px] text-muted-foreground">No stock movements yet</div>}
       </Card>
     </div>
   );

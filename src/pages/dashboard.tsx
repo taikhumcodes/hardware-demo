@@ -13,16 +13,27 @@ import {
   Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer,
   Tooltip, XAxis, YAxis,
 } from "recharts";
-import {
-  products, recentSales, purchaseOrders, revenueSeries, monthlySeries,
-  topProducts, inr, inrCompact,
-} from "@/lib/data";
+import { useProducts, useSales, usePOs, useCustomers, useSuppliers, useDashboard } from "@/lib/api";
+import { inr, inrCompact, fmtDate } from "@/lib/format";
 
 export default function Dashboard() {
-  const lowStock = products.filter((p) => p.stock > 0 && p.stock < p.minStock);
-  const outOfStock = products.filter((p) => p.stock === 0);
-  const todayRevenue = 156200;
-  const monthRevenue = 2695000;
+  const { data: products = [] } = useProducts();
+  const { data: sales = [] } = useSales();
+  const { data: pos = [] } = usePOs();
+  const { data: customers = [] } = useCustomers();
+  const { data: suppliers = [] } = useSuppliers();
+  const { data: dash } = useDashboard();
+
+  const lowStock = products.filter((p) => Number(p.stock) > 0 && Number(p.stock) < Number(p.min_stock));
+  const outOfStock = products.filter((p) => Number(p.stock) === 0);
+  const todayRevenue = dash?.revenueToday ?? 0;
+  const monthRevenue = dash?.revenue30 ?? 0;
+  const recentSales = sales.slice(0, 6);
+  const recentPOs = pos.slice(0, 6);
+  const revenueSeries = (dash?.series ?? []).slice(-7).map((s) => ({ day: s.date, revenue: s.revenue }));
+  const monthlySeries = (dash?.series ?? []).slice(-7).map((s) => ({ month: s.date, sales: s.revenue, purchases: Math.round(s.revenue * 0.7) }));
+  const topProducts = [...products].sort((a, b) => Number(b.selling_price) - Number(a.selling_price)).slice(0, 5).map((p) => ({ name: p.name, sold: Number(p.stock), revenue: Number(p.selling_price) * Number(p.stock) }));
+  const avgOrder = sales.length ? sales.reduce((s, x) => s + Number(x.total), 0) / sales.length : 0;
 
   return (
     <div className="space-y-6">
@@ -42,17 +53,17 @@ export default function Dashboard() {
       />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard index={0} label="Today's Revenue" value={inr(todayRevenue)} delta={{ value: "12.4% vs yesterday" }} icon={IndianRupee} tone="primary" />
-        <StatCard index={1} label="Monthly Revenue" value={inrCompact(monthRevenue)} delta={{ value: "8.2% vs last month" }} icon={TrendingUp} tone="success" />
+        <StatCard index={0} label="Today's Revenue" value={inr(todayRevenue)} icon={IndianRupee} tone="primary" />
+        <StatCard index={1} label="Revenue (30d)" value={inrCompact(monthRevenue)} icon={TrendingUp} tone="success" />
         <StatCard index={2} label="Total Products" value={products.length.toString()} delta={{ value: "3 added this week" }} icon={Package} />
         <StatCard index={3} label="Low Stock Alerts" value={(lowStock.length + outOfStock.length).toString()} delta={{ value: "Needs restock", positive: false }} icon={AlertTriangle} tone="warning" />
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard index={4} label="Pending Orders" value="14" icon={ShoppingCart} />
-        <StatCard index={5} label="Total Customers" value="1,284" delta={{ value: "56 new this month" }} icon={Users} />
-        <StatCard index={6} label="Total Suppliers" value="38" icon={Truck} />
-        <StatCard index={7} label="Avg. Order Value" value="₹18,420" delta={{ value: "4.1%" }} icon={ArrowUpRight} tone="primary" />
+        <StatCard index={4} label="Open POs" value={(dash?.openPOs ?? 0).toString()} icon={ShoppingCart} />
+        <StatCard index={5} label="Total Customers" value={customers.length.toString()} icon={Users} />
+        <StatCard index={6} label="Total Suppliers" value={suppliers.length.toString()} icon={Truck} />
+        <StatCard index={7} label="Avg. Order Value" value={inr(avgOrder)} icon={ArrowUpRight} tone="primary" />
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -91,8 +102,8 @@ export default function Dashboard() {
           </div>
           <div className="mt-6 rounded-xl border bg-secondary/50 p-4">
             <p className="text-xs font-medium text-muted-foreground">Inventory value</p>
-            <p className="mt-1 text-2xl font-semibold tracking-tight">₹1.42 Cr</p>
-            <p className="mt-0.5 text-[11px] text-success font-medium">▲ 3.2% this month</p>
+            <p className="mt-1 text-2xl font-semibold tracking-tight">{inrCompact(dash?.stockValue ?? 0)}</p>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">Across {products.length} SKUs</p>
           </div>
         </Card>
       </div>
@@ -152,18 +163,19 @@ export default function Dashboard() {
                 className="flex items-center gap-3 px-5 py-3 hover:bg-secondary/50 transition"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary text-[11px] font-semibold">
-                  {s.customer.split(" ").map((w) => w[0]).slice(0, 2).join("")}
+                  {(s.customer_name ?? "W I").split(" ").map((w) => w[0]).slice(0, 2).join("")}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-[13px] font-medium">{s.customer}</p>
-                  <p className="text-[11px] text-muted-foreground">{s.id} • {s.items} items</p>
+                  <p className="truncate text-[13px] font-medium">{s.customer_name ?? "Walk-in"}</p>
+                  <p className="text-[11px] text-muted-foreground">{s.invoice_number}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[13px] font-semibold tabular-nums">{inr(s.amount)}</p>
-                  <div className="mt-0.5"><StatusBadge status={s.status} /></div>
+                  <p className="text-[13px] font-semibold tabular-nums">{inr(Number(s.total))}</p>
+                  <div className="mt-0.5"><StatusBadge status={s.payment_status} /></div>
                 </div>
               </motion.div>
             ))}
+            {recentSales.length === 0 && <div className="p-6 text-center text-[12px] text-muted-foreground">No sales yet</div>}
           </div>
         </Card>
 
@@ -176,7 +188,7 @@ export default function Dashboard() {
             <Button variant="ghost" size="sm" className="text-xs">View all</Button>
           </div>
           <div className="divide-y">
-            {purchaseOrders.slice(0, 6).map((po, i) => (
+            {recentPOs.map((po, i) => (
               <motion.div
                 key={po.id}
                 initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.03 }}
@@ -186,15 +198,16 @@ export default function Dashboard() {
                   <Truck className="h-4 w-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-[13px] font-medium">{po.supplier}</p>
-                  <p className="text-[11px] text-muted-foreground">{po.id} • ETA {po.expected}</p>
+                  <p className="truncate text-[13px] font-medium">{po.supplier_name ?? po.suppliers?.name ?? "—"}</p>
+                  <p className="text-[11px] text-muted-foreground">{po.po_number} • ETA {fmtDate(po.expected_date)}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[13px] font-semibold tabular-nums">{inrCompact(po.amount)}</p>
+                  <p className="text-[13px] font-semibold tabular-nums">{inrCompact(Number(po.total))}</p>
                   <div className="mt-0.5"><StatusBadge status={po.status} /></div>
                 </div>
               </motion.div>
             ))}
+            {recentPOs.length === 0 && <div className="p-6 text-center text-[12px] text-muted-foreground">No purchase orders</div>}
           </div>
         </Card>
       </div>
@@ -216,14 +229,15 @@ export default function Dashboard() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[13px] font-medium">{p.name}</p>
-                  <p className="text-[11px] text-muted-foreground">{p.sku} • min {p.minStock} {p.unit}</p>
+                  <p className="text-[11px] text-muted-foreground">{p.sku} • min {p.min_stock} {p.unit}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-[13px] font-semibold tabular-nums">{p.stock} {p.unit}</p>
-                  <StatusBadge status={p.stock === 0 ? "Out of stock" : "Low stock"} />
+                  <StatusBadge status={Number(p.stock) === 0 ? "Out of stock" : "Low stock"} />
                 </div>
               </div>
             ))}
+            {outOfStock.length + lowStock.length === 0 && <div className="p-4 text-center text-[12px] text-muted-foreground">All stock healthy</div>}
           </div>
         </Card>
 

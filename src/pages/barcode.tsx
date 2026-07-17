@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Barcode, Printer, Search, Tag, ScanLine } from "lucide-react";
-import { products, inr } from "@/lib/data";
+import { useProducts } from "@/lib/api";
+import { inr } from "@/lib/format";
 
 function Bars({ code }: { code: string }) {
   // deterministic pseudo-random bars from code
@@ -23,6 +24,7 @@ function Bars({ code }: { code: string }) {
 export default function BarcodePage() {
   const [q, setQ] = useState("");
   const [qty, setQty] = useState(4);
+  const { data: products = [] } = useProducts();
   const filtered = products.filter((p) => p.name.toLowerCase().includes(q.toLowerCase()) || p.sku.toLowerCase().includes(q.toLowerCase())).slice(0, 12);
   return (
     <div className="space-y-6">
@@ -56,12 +58,12 @@ export default function BarcodePage() {
         {filtered.map((p) => (
           <Card key={p.id} className="rounded-2xl border p-5 shadow-none">
             <p className="text-[13px] font-semibold tracking-tight truncate">{p.name}</p>
-            <p className="text-[11.5px] text-muted-foreground">{p.brand} • {p.category}</p>
+            <p className="text-[11.5px] text-muted-foreground">{p.brands?.name ?? "—"} • {p.categories?.name ?? "—"}</p>
             <div className="mt-4 rounded-xl border bg-white p-3">
-              <Bars code={p.sku} />
+              <Bars code={p.barcode ?? p.sku} />
               <div className="mt-2 flex items-center justify-between text-[11.5px] font-mono">
-                <span>{p.sku}</span>
-                <span className="font-sans font-semibold">{inr(p.sellingPrice)}</span>
+                <span>{p.barcode ?? p.sku}</span>
+                <span className="font-sans font-semibold">{inr(Number(p.selling_price))}</span>
               </div>
             </div>
             <Button variant="outline" size="sm" className="mt-3 h-8 w-full rounded-lg text-xs">
